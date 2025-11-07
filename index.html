@@ -19,7 +19,9 @@
       --bg: #f6f8fb;
       --card: #ffffff;
       --ring: rgba(0, 119, 200, 0.15);
-      --radius: 16px;
+      --radius: 18px;
+      --radius-lg: 28px;
+      --shadow: 0 12px 30px -18px rgba(0,0,0,0.3);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -27,32 +29,82 @@
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--ink);
-      background: linear-gradient(180deg, var(--bg), #fff 40%);
+      background: radial-gradient(1200px 600px at 20% -10%, #e9f4fb 0%, transparent 70%),
+                  linear-gradient(180deg, var(--bg), #fff 45%);
     }
     a { color: var(--psu-bright); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .wrap { max-width: 1000px; margin: 0 auto; padding: 24px; }
-    header { border-bottom: 1px solid #e8edf5; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid #e8edf5;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+    }
     .brand { display:flex; align-items:center; gap: 14px; padding: 14px 0; }
-    .logo { width: 44px; height: 44px; border-radius: 10px; background: var(--psu-blue); display:grid; place-items:center; color:#fff; font-weight:700; }
+    .logo { width: 44px; height: 44px; border-radius: 10px; background: var(--psu-blue); display:grid; place-items:center; color:#fff; font-weight:700; letter-spacing: .5px; }
     .brand h1 { font-size: 18px; margin: 0; line-height: 1.2; }
     .brand p { margin: 0; color: var(--muted); font-size: 13px; }
 
+    /* Hero */
     .hero { margin: 32px 0 24px; display:grid; gap: 16px; }
-    .title { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0; }
-    .lead { color: var(--muted); font-size: clamp(16px, 2vw, 18px); }
+    .title { font-size: clamp(28px, 4vw, 42px); line-height: 1.06; margin: 0; }
+    .lead { color: var(--muted); font-size: clamp(16px, 2vw, 18px); max-width: 85ch; }
 
-    .grid { display:grid; grid-template-columns: 1fr; gap: 18px; }
-    @media (min-width: 960px) { .grid { grid-template-columns: 2fr 1fr; } }
+    /* Artistic section arrangement */
+    .flow { display: grid; gap: 20px; }
+    @media (min-width: 1100px) {
+      .flow { grid-template-columns: minmax(0, 3fr) minmax(260px, 1.25fr); align-items: start; }
+    }
 
-    .card { background: var(--card); border: 1px solid #e8edf5; border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 30px -20px rgba(0,0,0,0.25); }
+    .card { background: var(--card); border: 1px solid #e8edf5; border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
     .card h2 { margin: 0 0 12px; font-size: 20px; color: var(--psu-blue); }
     .card h3 { margin: 18px 0 8px; font-size: 16px; color: var(--psu-blue); }
     .card ul { margin: 0 0 8px 18px; line-height: 1.6; }
     .note { font-size: 14px; color: var(--muted); }
-    footer { margin: 40px 0 20px; color: var(--muted); font-size: 13px; }
+    footer { margin: 48px 0 24px; color: var(--muted); font-size: 13px; }
     .cta { display:inline-flex; align-items:center; gap:10px; border-radius: 999px; padding: 12px 18px; border: 1px solid var(--psu-bright); color:#fff; background: var(--psu-bright); font-weight: 600; box-shadow: 0 12px 24px -12px var(--ring); }
     .cta:hover { filter: brightness(0.98); text-decoration: none; }
+
+    /* Section accents */
+    .panel { border-radius: var(--radius-lg); overflow: clip; position: relative; }
+    .panel::before {
+      content: ""; position: absolute; inset: -30% -10% auto auto; height: 180px; width: 360px;
+      background: radial-gradient(180px 120px at right top, rgba(0,119,200,.08), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Figure card larger + centered */
+    #figure img { max-width: 100%; height:auto; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    #figure .frame { display:flex; justify-content:center; padding: 6px; background: linear-gradient(180deg, #fff, #f7fbff); border-radius: 16px; border: 1px solid #e8edf5; }
+
+    /* Right-side PI intro (sticky) */
+    .aside { position: sticky; top: 24px; display: grid; gap: 16px; }
+    .pi { display:grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: center; }
+    .pi .avatar { width: 88px; height: 88px; border-radius: 50%; background: linear-gradient(135deg,#d9ecff,#f0f7ff); border: 1px solid #d7e6f5; box-shadow: 0 8px 24px -12px rgba(0,0,0,.25); overflow:hidden; }
+    .pi .avatar img { width: 100%; height: 100%; object-fit: cover; display:block; }
+    .pi h3 { margin: 0 0 2px; font-size: 17px; color: var(--ink); }
+    .pi p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .quick ul { margin: 10px 0 0 18px; }
+    .quick li { margin: 4px 0; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid #d7e6f5; background:#f9fcff; font-size: 13px; }
+
+    /* Mosaic arrangement on left */
+    .mosaic { display: grid; gap: 20px; }
+    @media (min-width: 900px) {
+      .mosaic { grid-template-columns: 1fr 1fr; }
+      #research { grid-column: 1 / -1; }
+    }
+
+    /* Small floating decoration */
+    .bubble { position: absolute; inset: auto auto -12px -12px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(52% 52% at 60% 40%, rgba(0,119,200,.12), rgba(0,119,200,0) 70%); filter: blur(.2px); pointer-events:none; }
+
+    /* Department strip refined */
+    #dept { display:flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .dept-badge { padding: 8px 12px; border-radius: 10px; border: 1px dashed #d7e6f5; background: #f7fbff; font-size: 13px; color: var(--psu-blue); }
   </style>
 </head>
 <body>
@@ -69,15 +121,17 @@
   </header>
 
   <main class="wrap">
-    <!-- Header block from PDF -->
-    <section class="card" id="dept">
+    <!-- Dept strip -->
+    <section class="card panel" id="dept">
       <p><strong>Department of Ecosystem Science and Management</strong><br>
       The Pennsylvania State University</p>
       <p>University Park, PA 16802, USA<br>
       <a href="https://ecosystems.psu.edu" target="_blank" rel="noopener">https://ecosystems.psu.edu</a></p>
+      <span class="dept-badge" aria-hidden="true">QS World University Rankings · Top 100</span>
+      <div class="bubble" aria-hidden="true"></div>
     </section>
 
-    <!-- Title and opening paragraph (verbatim) -->
+    <!-- Hero -->
     <section class="hero">
       <h2 class="title">PhD Student Position in Environmental Soil Physics</h2>
       <p class="lead">The Environmental Soil Physics Lab led by Dr. Yingxue Yu at Penn State invites applications for a PhD position beginning in Fall 2026. The successful candidate will be housed in the Department of Ecosystem Science and Management and may enroll through the Soil Science Graduate Program or the Inter-college Graduate Degree Program in Ecology, based on research interests and professional goals. The lab focuses on understanding how physicochemical interactions and environmental factors shape contaminant behavior across terrestrial and aquatic environments.</p>
@@ -85,81 +139,74 @@
         <a href="assets/student_advertisement.pdf" download class="cta">Download Full Advertisement (PDF)</a>
       </p>
     </section>
-    
-    <section class="card" id="figure">
-  <h2>Overview of Research Areas</h2>
-  <div style="display:flex; justify-content:center;">
-    <img src="assets/fateandtransport.png"
-         alt="Conceptual diagram illustrating the fate and transport of emerging contaminants"
-         style="max-width:65%; height:auto; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.15);" />
-  </div>
-  <p class="note" style="text-align:center;">
-    Conceptual illustration of contaminant pathways, transformations, and interactions in terrestrial and aquatic systems.
-  </p>
-</section>
 
+    <!-- Two-column layout: left mosaic + right sticky PI intro -->
+    <section class="flow">
+      <!-- LEFT: Main content in a visually varied mosaic -->
+      <div class="mosaic" aria-label="Main content">
+        <section class="card panel" id="figure">
+          <h2>Overview of Research Areas</h2>
+          <div class="frame">
+            <img src="assets/fateandtransport.png" alt="Conceptual diagram illustrating the fate and transport of emerging contaminants" />
+          </div>
+          <p class="note" style="text-align:center;">Conceptual illustration of contaminant pathways, transformations, and interactions in terrestrial and aquatic systems.</p>
+        </section>
 
-
-    <!-- Specific research areas include: (verbatim) -->
-    <section class="card" id="research">
-      <h2>Specific research areas include:</h2>
-      <ul>
-        <li>Transport of emerging contaminants (e.g., micro- and nanoplastics, PFAS, engineered nanomaterials, and pathogens) in saturated and unsaturated porous media;</li>
-        <li>Aggregation, stability, and transformation of contaminants in soil and water systems;</li>
-        <li>Quantification of adsorption and interfacial interactions using QCM-D and related surface techniques;</li>
-        <li>Characterization of soil hydraulic properties, water flow processes, and indicators of soil health;</li>
-        <li>Uptake and interactions of contaminants with plants;</li>
-        <li>Evaluation of the environmental sustainability and degradation behavior of biodegradable plastics.</li>
-      </ul>
-      <p>Students have the flexibility to pursue research topics within these areas through laboratory, field, and modeling approaches using computational tools such as HYDRUS and R. The lab fosters a collaborative and supportive environment that encourages creative, rigorous, and independent inquiry into the environmental behavior of contaminants. Motivated students passionate about soil-water-plant interactions, contaminant transport, and environmental sustainability are welcome to join our growing team at Penn State.</p>
-    </section>
-
-    <!-- Eligibility & Priority (verbatim) -->
-    <section class="card" id="eligibility">
-      <h2>Eligibility &amp; Priority:</h2>
-      <ul>
-        <li>Master’s degree in Hydrology, Civil Engineering, Environmental Science, Environmental Engineering, Soil Science, or a closely related field at the time of appointment.</li>
-        <li>Priority will be given to applicants who have:
+        <section class="card panel" id="eligibility">
+          <h2>Eligibility &amp; Priority</h2>
           <ul>
-            <li>Engineering background with solid training in mathematics and physics;</li>
-            <li>Prior first-author, peer-reviewed publications in related research areas;</li>
-            <li>Research experience in computational modeling (e.g., HYDRUS, R, or similar) and/or field-based investigations.</li>
+            <li>Master’s degree in Hydrology, Civil Engineering, Environmental Science, Environmental Engineering, Soil Science, or a closely related field at the time of appointment.</li>
+            <li>Priority will be given to applicants who have:
+              <ul>
+                <li>Engineering background with solid training in mathematics and physics;</li>
+                <li>Prior first-author, peer-reviewed publications in related research areas;</li>
+                <li>Research experience in computational modeling (e.g., HYDRUS, R, or similar) and/or field-based investigations.</li>
+              </ul>
+            </li>
+            <li>Exceptional applicants holding a bachelor’s degree may be considered and offered a pathway consisting of a 2-year master’s program followed by a 3-year PhD program.</li>
+            <li>For details on English proficiency, minimum GPA, and other requirements, please refer to Penn State Graduate School (<a href="https://gradschool.psu.edu/" target="_blank" rel="noopener">https://gradschool.psu.edu/</a>).</li>
           </ul>
-        </li>
-        <li>Exceptional applicants holding a bachelor’s degree may be considered and offered a pathway consisting of a 2-year master’s program followed by a 3-year PhD program.</li>
-        <li>For details on English proficiency, minimum GPA, and other requirements, please refer to Penn State Graduate School (<a href="https://gradschool.psu.edu/" target="_blank" rel="noopener">https://gradschool.psu.edu/</a>).</li>
-      </ul>
-      <p>The application deadline is January 3, 2026, and review of applications will begin immediately. Informal inquiries are welcome and can be directed to Dr. Yu (email: <a href="mailto:yqy5525@psu.edu">yqy5525@psu.edu</a>).</p>
-    </section>
+          <p class="note">Application deadline: <strong>January 3, 2026</strong>. Informal inquiries: <a href="mailto:yqy5525@psu.edu">yqy5525@psu.edu</a>.</p>
+        </section>
 
-    <!-- How to Apply (verbatim) -->
-    <section class="card" id="apply">
-      <h2>How to Apply:</h2>
-      <p>Prospective students are encouraged to email Dr. Yu (email: <a href="mailto:yqy5525@psu.edu">yqy5525@psu.edu</a>) a single PDF file that includes the following documents:</p>
-      <ol>
-        <li>Cover letter describing qualifications, research experience, and future research goals, including how these align with the above-mentioned research areas (max. 3 pages);</li>
-        <li>Curriculum vitae;</li>
-        <li>Up to three representative publications (full text, if available);</li>
-        <li>Academic transcript (unofficial copies are acceptable for initial review);</li>
-        <li>Names and contact information of three references.</li>
-      </ol>
-    </section>
+        <section class="card panel" id="research">
+          <h2>Specific Research Areas</h2>
+          <ul>
+            <li>Transport of emerging contaminants (e.g., micro- and nanoplastics, PFAS, engineered nanomaterials, and pathogens) in saturated and unsaturated porous media;</li>
+            <li>Aggregation, stability, and transformation of contaminants in soil and water systems;</li>
+            <li>Quantification of adsorption and interfacial interactions using QCM-D and related surface techniques;</li>
+            <li>Characterization of soil hydraulic properties, water flow processes, and indicators of soil health;</li>
+            <li>Uptake and interactions of contaminants with plants;</li>
+            <li>Evaluation of the environmental sustainability and degradation behavior of biodegradable plastics.</li>
+          </ul>
+          <p>Students have the flexibility to pursue research topics within these areas through laboratory, field, and modeling approaches using computational tools such as HYDRUS and R. The lab fosters a collaborative and supportive environment that encourages creative, rigorous, and independent inquiry into the environmental behavior of contaminants. Motivated students passionate about soil–water–plant interactions, contaminant transport, and environmental sustainability are welcome to join our growing team at Penn State.</p>
+        </section>
 
-    <!-- Living at Penn State (verbatim) -->
-    <section class="card" id="living">
-      <h2>Living at Penn State</h2>
-      <p>Nestled in State College, the University Park campus blends a tight-knit college-town vibe with the resources of a flagship research university ranked 82nd globally in the 2026 QS World University Rankings. Students enjoy a walkable community with cafés, arts venues, and quick access to trails and parks across central Pennsylvania. You will find modern housing options, abundant study spaces, and comprehensive recreation and wellness facilities that support a balanced, healthy lifestyle. With 1,000+ student organizations spanning engineering, the arts, culture, and service, it is easy to find your people and your passion. From day one, you can plug into hands-on research and real-world projects alongside world-class faculty, building skills, networks, and momentum for your future.</p>
-    </section>
+        <section class="card panel" id="apply">
+          <h2>How to Apply</h2>
+          <p>Prospective students are encouraged to email Dr. Yu (<a href="mailto:yqy5525@psu.edu">yqy5525@psu.edu</a>) a single PDF file that includes the following documents:</p>
+          <ol>
+            <li>Cover letter describing qualifications, research experience, and future research goals, including how these align with the above-mentioned research areas (max. 3 pages);</li>
+            <li>Curriculum vitae;</li>
+            <li>Up to three representative publications (full text, if available);</li>
+            <li>Academic transcript (unofficial copies are acceptable for initial review);</li>
+            <li>Names and contact information of three references.</li>
+          </ol>
+        </section>
 
+        <section class="card panel" id="living">
+          <h2>Living at Penn State</h2>
+          <p>Nestled in State College, the University Park campus blends a tight-knit college-town vibe with the resources of a flagship research university ranked 82nd globally in the 2026 QS World University Rankings. Students enjoy a walkable community with cafés, arts venues, and quick access to trails and parks across central Pennsylvania. You will find modern housing options, abundant study spaces, and comprehensive recreation and wellness facilities that support a balanced, healthy lifestyle. With 1,000+ student organizations spanning engineering, the arts, culture, and service, it is easy to find your people and your passion.</p>
+        </section>
+      </div>
 
-  </main>
-
-  <footer class="wrap">
-    <p class="note">© <span id="year"></span> Environmental Soil Physics Lab · Department of Ecosystem Science and Management · The Pennsylvania State University · University Park, PA</p>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+      <!-- RIGHT: Sticky PI intro / about section -->
+      <aside class="aside" aria-label="About the PI">
+        <section class="card panel" id="about">
+          <div class="pi">
+            <div class="avatar">
+              <!-- Replace with your photo if available -->
+              <img src="assets/yingxue.jpg" alt="Portrait of Dr. Yingxue Yu" onerror="this.parentElement.style.background='linear-gradient(135deg,#d9ecff,#f0f7ff)'; this.remove();" />
+            </div>
+            <div>
+              <h3>Dr. Yingxue Yu</h
